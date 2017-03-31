@@ -20,7 +20,7 @@ class CreateMessageTable extends Migration
             $table->string('message');
             $table->string('sender');
             $table->string('date');
-            $table->string('mentioned_name');
+            $table->string('mentioned_name')->nullable();
             $table->timestamps();
         });
     }

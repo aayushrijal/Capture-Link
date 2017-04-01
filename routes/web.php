@@ -24,3 +24,10 @@ $router->get(
         'uses' => 'HomeController@index',
     )
 );
+$router->get(
+    'api',
+    array(
+        'as'   => 'api',
+        'uses' => 'HomeController@api',
+    )
+);

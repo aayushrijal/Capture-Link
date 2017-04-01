@@ -30,6 +30,11 @@ class ApiImportingService
         $this->dbInsertion($data);
     }
 
+    /**
+     * Fetches data from API
+     *
+     * @return array
+     */
     public function fetchUrl()
     {
         $url      = $this->getUrlApi();
@@ -39,10 +44,15 @@ class ApiImportingService
         return json_decode($content)->items;
     }
 
+    /**
+     * API URL
+     *
+     * @return string
+     */
     protected function getUrlApi()
     {
-        $room_id = "3722278";
-        $token   = "lexG6bpFOdDqGmL9PeIP8V2VTEQKp9Xp0yapvwBa";
+        $room_id = env('HIPCHAT_ROOM_ID');
+        $token   = env('HIPCHAT_TOKEN');
         $url     = sprintf(
             "https://api.hipchat.com/v2/room/%s/history?auth_token=%s",
             $room_id,
@@ -53,6 +63,8 @@ class ApiImportingService
     }
 
     /**
+     * Insert data to Database
+     *
      * @param $data
      */
     protected function dbInsertion($data)
@@ -70,6 +82,8 @@ class ApiImportingService
     }
 
     /**
+     * Checks if message already exists or creates a new message
+     *
      * @param $row
      *
      * @return static
@@ -99,6 +113,13 @@ class ApiImportingService
         return $message;
     }
 
+    /**
+     * Checks if notification already exists or creates a new notification
+     * @param $message
+     * @param $row
+     *
+     * @return static
+     */
     protected function findOrCreateNotification($message, $row)
     {
         $notification = Notification::where('message_id', $message->id)

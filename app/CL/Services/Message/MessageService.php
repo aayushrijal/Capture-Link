@@ -21,11 +21,23 @@ class MessageService
         $this->message = $message;
     }
 
+    /**
+     * Gets all the messages
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function all()
     {
         return $this->message->all();
     }
 
+    /**
+     * Finds specific message
+     *
+     * @param $id
+     *
+     * @return object
+     */
     public function find($id)
     {
         return $this->message->find($id);

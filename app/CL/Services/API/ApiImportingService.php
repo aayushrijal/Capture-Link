@@ -79,17 +79,21 @@ class ApiImportingService
         $message = Message::where('message_id', $row->id)
                           ->first();
 
-        if (empty($message)) {
-            $message = Message::create(
-                [
-                    'message_id'     => $row->id,
-                    'type'           => $row->type,
-                    'message'        => $row->message,
-                    'sender'         => $row->from->name,
-                    'date'           => $row->date,
-                    'mentioned_name' => empty($row->mentions) ? '' : $row->mentions[0]->name,
-                ]
-            );
+        preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $row->message, $match);
+
+        if (!empty($match[0])) {
+            if (empty($message)) {
+                $message = Message::create(
+                    [
+                        'message_id'     => $row->id,
+                        'type'           => $row->type,
+                        'message'        => $match[0][0],
+                        'sender'         => $row->from->name,
+                        'date'           => $row->date,
+                        'mentioned_name' => empty($row->mentions) ? '' : $row->mentions[0]->name,
+                    ]
+                );
+            }
         }
 
         return $message;
@@ -107,8 +111,8 @@ class ApiImportingService
                     'message_id'      => $message->id,
                     'type'            => $row->type,
                     'date'            => $row->date,
-                    'card'            => 'card',
-                    'message'         => 'message',
+                    'card'            => json_decode($row->card)->icon->url,
+                    'message'         => json_decode($row->card)->description,
                 ]
             );
         }

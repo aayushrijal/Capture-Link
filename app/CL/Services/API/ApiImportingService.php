@@ -115,6 +115,7 @@ class ApiImportingService
 
     /**
      * Checks if notification already exists or creates a new notification
+     *
      * @param $message
      * @param $row
      *
@@ -133,7 +134,7 @@ class ApiImportingService
                     'type'            => $row->type,
                     'date'            => $row->date,
                     'card'            => json_decode($row->card)->icon->url,
-                    'message'         => json_decode($row->card)->description,
+                    'message'         => json_decode($row->card)->title,
                 ]
             );
         }

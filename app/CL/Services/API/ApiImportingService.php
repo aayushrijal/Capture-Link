@@ -45,6 +45,24 @@ class ApiImportingService
     }
 
     /**
+     * Fetches only notification array
+     *
+     * @return array
+     */
+    public function notification()
+    {
+        $data   = $this->fetchUrl();
+        $result = [];
+        foreach ($data as $d) {
+            if ($d->type == 'notification') {
+                array_push($result, $d);
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * API URL
      *
      * @return string

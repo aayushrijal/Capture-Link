@@ -26,10 +26,10 @@ class HomeController extends Controller
     public function __construct(MessageService $message, ApiImportingService $api)
     {
         $this->message = $message;
-        $this->api = $api;
+        $this->api     = $api;
     }
 
-    
+
     /**
      * Pull api directly so as to reflect real time changes in the chat room
      *
@@ -37,9 +37,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $apis = $this->api->fetchUrl();
+        $apis         = $this->api->fetchUrl();
+        $notification = $this->api->notification();
 
-        return view('api.index',compact('apis'));
+        return view('api.index', compact('apis', 'notification'));
     }
 
     /**

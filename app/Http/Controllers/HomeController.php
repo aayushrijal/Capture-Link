@@ -29,27 +29,29 @@ class HomeController extends Controller
         $this->api = $api;
     }
 
+    
+    /**
+     * Pull api directly so as to reflect real time changes in the chat room
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index()
+    {
+        $apis = $this->api->fetchUrl();
+
+        return view('api.index',compact('apis'));
+    }
+
     /**
      * Stores api data into database and returns to view from DB
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function store()
     {
         $messages = $this->message->all();
 
         return view('app', compact('messages'));
     }
 
-    /**
-     * Pull api directly so as to reflect real time changes in the chat room
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function api()
-    {
-        $apis = $this->api->fetchUrl();
-
-        return view('welcome',compact('apis'));
-    }
 }

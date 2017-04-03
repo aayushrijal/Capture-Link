@@ -25,9 +25,9 @@ $router->get(
     )
 );
 $router->get(
-    'api',
+    'store',
     array(
-        'as'   => 'api',
-        'uses' => 'HomeController@api',
+        'as'   => 'store',
+        'uses' => 'HomeController@store',
     )
 );

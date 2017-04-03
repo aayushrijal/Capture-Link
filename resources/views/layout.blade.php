@@ -13,6 +13,7 @@
 
 
 	<script src="{{ url('js/jquery.min.js') }}"></script>
+	<script src="{{ url('js/clipboard.min.js') }}"></script>
     <script src="{{ url('js/main.js') }}"></script>
 </body>
 </html>

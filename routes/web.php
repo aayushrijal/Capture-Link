@@ -11,6 +11,23 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get(
+//    '/',
+//    function () {
+//        return view('app');
+//    }
+//);
+$router->get(
+    '/',
+    array(
+        'as'   => 'home',
+        'uses' => 'HomeController@index',
+    )
+);
+$router->get(
+    'api',
+    array(
+        'as'   => 'api',
+        'uses' => 'HomeController@api',
+    )
+);

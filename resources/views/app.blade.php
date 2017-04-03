@@ -75,26 +75,17 @@
 
 	<div class="content">
 		<div class="title m-b-md">
-			L
+			l
 		</div>
+		<div>
+			<ul>
+				@foreach($messages as $message)
+					<li>{{ $message->sender }} shared a link <a href='{{ $message->message }}' target="_blank">{{
+					$message->id }}</a></li>
+				@endforeach
+			</ul>
 
-		<ul>
-			@foreach($apis as $api)
-				@if($api->type == 'message')
-					<?php
-					preg_match_all(
-							'#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#',
-							$api->message,
-							$match
-					);
-					?>
-					@if(!empty($match[0]))
-						<li>{{ $api->from->name }} shared a link <a href='{{ $match[0][0] }}'
-																	target="_blank">{{$match[0][0]}}</a></li>
-					@endif
-				@endif
-			@endforeach
-		</ul>
+		</div>
 	</div>
 </div>
 </body>

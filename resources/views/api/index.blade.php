@@ -76,7 +76,8 @@
 		</div>
 	</section>
 
-	<span class="copy_icon" title="Copy links to clipboard"></span>
+	<p id="copy_text"></p>
+	<span class="copy_icon" title="Copy links to clipboard"  data-clipboard-target="#copy_text"></span>
 
 
 @endsection

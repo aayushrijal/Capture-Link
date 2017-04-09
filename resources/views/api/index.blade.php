@@ -64,7 +64,12 @@
 											</div>
 										</div>
 										<div class="mentions">
-											Mentions: <span>@Manish Lal Shrestha</span><span>@Saugat Maharjan</span>
+											Mentioned:
+										@if(!empty($api->mentions))
+												<span>{{ '@'.($api->mentions[0]->mention_name) }}</span>
+												@else
+												<span>Nobody</span>
+											@endif
 										</div>
 									</div>
 								</li>
@@ -77,7 +82,7 @@
 	</section>
 
 	<p id="copy_text"></p>
-	<span class="copy_icon" title="Copy links to clipboard"  data-clipboard-target="#copy_text"></span>
+	<span class="copy_icon" title="Copy links to clipboard" data-clipboard-target="#copy_text"></span>
 
 
 @endsection

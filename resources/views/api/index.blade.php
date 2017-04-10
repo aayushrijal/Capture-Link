@@ -85,7 +85,10 @@
 	</section>
 
 	<p id="copy_text"></p>
-	<span class="copy_icon" title="Copy links to clipboard" data-clipboard-target="#copy_text"></span>
+	<p class="copiedConfirm">Links copied to clipboard</p>
+	<span class="copy_icon" title="Copy links to clipboard" data-clipboard-target="#copy_text">
+		{{--<span class="copiedConfirm">Links copied to clipboard</span>--}}
+	</span>
 	<script src="http://listjs.com/assets/javascripts/list.min.js"></script>
 	<script>
 		function search() {

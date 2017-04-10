@@ -16,6 +16,14 @@ jQuery(document).ready(function($) {
 		$('#copy_text').html(copy_text);
 	});
 
+	$(".copy_icon").click(function(){
+		$(".copiedConfirm").show();
+	});
+
+	setInterval(function(){
+		$(".copiedConfirm").hide();
+	},4000);
+
 	new Clipboard('.copy_icon');
 
 });

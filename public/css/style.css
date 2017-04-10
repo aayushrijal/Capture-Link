@@ -272,3 +272,43 @@ input.select_link[type=checkbox]:checked + .select_icon {
   width: 100%;
   z-index: 0;
   pointer-events: none; }
+
+.copiedConfirm {
+  /*position: absolute;
+  top: 50%;
+  right: 110%;
+  transform: translateY(-50%);*/
+  position: fixed;
+  top: 25px;
+  right: 15px;
+  display: none;
+  width: 225px;
+  text-align: center;
+  padding: 10px;
+  font-size: 15px;
+  background: #e7ddff;
+  border-radius: 5px;
+  box-shadow: 0 7px 15px -2px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  animation: copied 1s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes copied {
+  0%{
+    opacity: 0;
+    top: 35px;
+  }
+  25%{
+    opacity: 1;
+    top: 25px;
+  }
+  75%{
+    opacity: 1;
+    top: 25px;
+  }
+  100%{
+    opacity: 0;
+    top: 20px;
+  }
+}

@@ -29,7 +29,6 @@
 					<span class="list_icon"></span>
 				</div>
 			</div>
-			<p class="links_shared_title">Links Shared Within - This Week</p>
 			<div class="row" id="link-list">
 				<ul class="shared_links_list list">
 

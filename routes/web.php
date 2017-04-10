@@ -11,12 +11,6 @@
 |
 */
 
-//Route::get(
-//    '/',
-//    function () {
-//        return view('app');
-//    }
-//);
 $router->get(
     '/',
     array(
@@ -24,10 +18,10 @@ $router->get(
         'uses' => 'HomeController@index',
     )
 );
-$router->get(
-    'store',
-    array(
-        'as'   => 'store',
-        'uses' => 'HomeController@store',
-    )
-);
+//$router->get(
+//    'store',
+//    array(
+//        'as'   => 'store',
+//        'uses' => 'HomeController@store',
+//    )
+//);

@@ -20,9 +20,9 @@
 	<section class="collection">
 		<div class="container">
 			<div class="filters">
-				<span class="from">From: <input type="date"/></span>
-				<span class="to">To: <input type="date"/></span>
-				<button class="view_all">All</button>
+				<span class="from">From: <input type="date" id="start-date"/></span>
+				<span class="to">To: <input type="date" id="end-date"/></span>
+				<button id="search-btn" onclick="search()">Search</button>
 
 				<div class="view_options">
 					<span class="grid_icon active"></span>
@@ -30,8 +30,8 @@
 				</div>
 			</div>
 			<p class="links_shared_title">Links Shared Within - This Week</p>
-			<div class="row">
-				<ul class="shared_links_list">
+			<div class="row" id="link-list">
+				<ul class="shared_links_list list">
 
 					@foreach($apis as $api)
 						@if($api->type == 'message')
@@ -43,16 +43,20 @@
 							);
 							?>
 							@if(!empty($match[0]))
-								<?php $title = ''; ?>
-								@foreach($notification as $n)
-									@if($api->id == $n->attach_to)
-										<?php $title = json_decode($n->card)->title ?>
+								<?php $title = '';
+								$card = ''
+								?>
+								@foreach($notifications as $notification)
+									@if($api->id == $notification->attach_to)
+										<?php $title = json_decode($notification->card)->title ?>
+										<?php $card = json_decode($notification->card)->icon->url ?>
 									@endif
 								@endforeach
 								<li class="shared_link">
 									<div class="card">
 										<div class="media">
-											<img src="placholder_image.png" alt="">
+											<img src="{{ empty($card) ? asset('images/placehoder_icon.svg') : $card }}"
+												 height='35' alt="">
 											<a href="{{ $match[0][0] }}" class="media_title"
 											   target="_blank">{{ empty($title) ? $match[0][0] : $title }}</a>
 											<small class="from">{{ $api->from->name }} <span
@@ -65,10 +69,10 @@
 										</div>
 										<div class="mentions">
 											Mentioned:
-										@if(!empty($api->mentions))
+											@if(!empty($api->mentions))
 												<span>{{ '@'.($api->mentions[0]->mention_name) }}</span>
-												@else
-												<span>Nobody</span>
+											@else
+												<span>{{ '@all' }}</span>
 											@endif
 										</div>
 									</div>
@@ -83,6 +87,29 @@
 
 	<p id="copy_text"></p>
 	<span class="copy_icon" title="Copy links to clipboard" data-clipboard-target="#copy_text"></span>
+	<script src="http://listjs.com/assets/javascripts/list.min.js"></script>
+	<script>
+		function search() {
+			var options = {
+				valueNames: ['shared_date']
+			};
+			var hackerList = new List('link-list', options),
+					sDate, eDate, cDate;
+
+			hackerList.filter(function(item) {
+				sDate = document.getElementById("start-date").value;
+				eDate = document.getElementById("end-date").value;
+				cDate = item._values.shared_date.replace(/[{()}]/g, '');
+				sDate = (sDate.length==0) ? null : Date.parse(sDate);
+				eDate = (eDate.length==0) ? null : Date.parse(eDate);
+				cDate = (cDate.length==0) ? null : Date.parse(cDate);
+
+				if((sDate == null && eDate == null) || (cDate <= eDate && cDate >= sDate)) {
+					return true;
+				}
+			});
+		}
+	</script>
 
 
 @endsection

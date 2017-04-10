@@ -38,9 +38,9 @@ class HomeController extends Controller
     public function index()
     {
         $apis         = $this->api->fetchUrl();
-        $notification = $this->api->notification();
+        $notifications = $this->api->notification();
 
-        return view('api.index', compact('apis', 'notification'));
+        return view('api.index', compact('apis', 'notifications'));
     }
 
     /**

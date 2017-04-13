@@ -46,10 +46,13 @@
 								$card = ''
 								?>
 								@foreach($notifications as $notification)
-									@if($api->id == $notification->attach_to)
-										<?php $title = json_decode($notification->card)->title ?>
-										<?php $card = json_decode($notification->card)->icon->url ?>
+									@if(isset($notification->attach_to))
+										@if($api->id == $notification->attach_to)
+											<?php $title = json_decode($notification->card)->title ?>
+											<?php $card = json_decode($notification->card)->icon->url ?>
+										@endif
 									@endif
+
 								@endforeach
 								<li class="shared_link">
 									<div class="card">
@@ -98,15 +101,15 @@
 			var hackerList = new List('link-list', options),
 					sDate, eDate, cDate;
 
-			hackerList.filter(function(item) {
+			hackerList.filter(function (item) {
 				sDate = document.getElementById("start-date").value;
 				eDate = document.getElementById("end-date").value;
 				cDate = item._values.shared_date.replace(/[{()}]/g, '');
-				sDate = (sDate.length==0) ? null : Date.parse(sDate);
-				eDate = (eDate.length==0) ? null : Date.parse(eDate);
-				cDate = (cDate.length==0) ? null : Date.parse(cDate);
+				sDate = (sDate.length == 0) ? null : Date.parse(sDate);
+				eDate = (eDate.length == 0) ? null : Date.parse(eDate);
+				cDate = (cDate.length == 0) ? null : Date.parse(cDate);
 
-				if((sDate == null && eDate == null) || (cDate <= eDate && cDate >= sDate)) {
+				if ((sDate == null && eDate == null) || (cDate <= eDate && cDate >= sDate)) {
 					return true;
 				}
 			});

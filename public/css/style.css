@@ -59,6 +59,15 @@ a {
   color: #555;
   text-decoration: none; }
 
+button{
+  border: none;
+  padding: 7px 12px;
+  border-radius: 3px;
+  margin-right: 10px;
+  background: #9574ea;
+  color: #f5f5f5;
+}
+
 .container {
   width: 1200px;
   max-width: 100%;

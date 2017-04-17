@@ -23,6 +23,9 @@
 				<span class="from">From: <input type="date" id="start-date"/></span>
 				<span class="to">To: <input type="date" id="end-date"/></span>
 				<button id="search-btn" onclick="search()">Search</button>
+				<button id="reset-btn" onclick="resetFilter()">Reset</button>
+				<button id="sort-btn" sort_order="desc" onclick="linkSort(this)">Sort</button>
+
 
 				<div class="view_options">
 					<span class="grid_icon active"></span>
@@ -94,24 +97,69 @@
 	</span>
 	<script src="http://listjs.com/assets/javascripts/list.min.js"></script>
 	<script>
+		var options = {
+			valueNames: ['shared_date']
+		};
+		var hackerList = new List('link-list', options);
 		function search() {
-			var options = {
-				valueNames: ['shared_date']
-			};
-			var hackerList = new List('link-list', options),
-					sDate, eDate, cDate;
+			var sDate = document.getElementById("start-date").value,
+					eDate = document.getElementById("end-date").value,
+					cDate;
+
+			if((sDate.length != 0 && eDate.length == 0) || (sDate.length == 0 && eDate.length != 0) ) {
+				alert('missing datefield value');
+				return;
+			}
+
+			if(Date.parse(sDate) > Date.parse(eDate)) {
+				alert('start date cannot be more than end Date');
+				return;
+			}
+
+			sDate = (sDate.length == 0) ? null : Date.parse(sDate);
+			eDate = (eDate.length == 0) ? null : Date.parse(eDate);
 
 			hackerList.filter(function (item) {
 				sDate = document.getElementById("start-date").value;
 				eDate = document.getElementById("end-date").value;
-				cDate = item._values.shared_date.replace(/[{()}]/g, '');
 				sDate = (sDate.length == 0) ? null : Date.parse(sDate);
 				eDate = (eDate.length == 0) ? null : Date.parse(eDate);
+				cDate = item._values.shared_date.replace(/[{()}]/g, '');
 				cDate = (cDate.length == 0) ? null : Date.parse(cDate);
 
 				if ((sDate == null && eDate == null) || (cDate <= eDate && cDate >= sDate)) {
 					return true;
 				}
+			});
+		}
+
+		function resetFilter() {
+			if(document.getElementById("start-date").value.length != 0) {
+				document.getElementById("start-date").value = '';
+			}
+			if(document.getElementById("end-date").value) {
+				document.getElementById("end-date").value = '';
+			}
+			search();
+		}
+		
+		function linkSort(btn) {
+			var sort_order;
+			if(btn.getAttribute('sort_order')=='desc') {
+				sort_order = btn.getAttribute('sort_order');
+				btn.setAttribute('sort_order','asc');
+			}
+			else {
+				sort_order = btn.getAttribute('sort_order');
+				btn.setAttribute('sort_order','desc')
+			}
+			var options = {
+				valueNames: ['shared_date']
+			};
+			var sortList = new List('link-list', options);
+			sortList.sort('shared_date', {
+				order: sort_order,
+				insensitive: true,
 			});
 		}
 	</script>
